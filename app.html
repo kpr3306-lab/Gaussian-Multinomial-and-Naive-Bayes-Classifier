@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Untitled</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="CoolUtils HTML exporter" />
+<style type="text/css">
+<!--
+body { color: #000000; background-color: #FFFFFF; }
+.python1-classname { color: #000080; font-weight: bold; }
+.python1-comment { color: #808080; font-style: italic; }
+.python1-commentedcode { color: #C0C0C0; font-style: italic; }
+.python1-documentation { color: #CC00FF; }
+.python1-float { color: #008080; }
+.python1-functionname { color: #008080; font-weight: bold; }
+.python1-hexadecimal { color: #008080; }
+.python1-identifier { color: #000000; }
+.python1-matchingbrace { color: #0000FF; font-weight: bold; }
+.python1-multi-linestring { color: #808000; }
+.python1-nonreservedkeyword { color: #000080; }
+.python1-number { color: #008080; }
+.python1-octal { color: #008080; }
+.python1-reservedword { font-weight: bold; }
+.python1-space { color: #C0C0C0; }
+.python1-string { color: #808000; }
+.python1-symbol { color: #800000; }
+.python1-syntaxerror { color: #FF0000; }
+.python1-systemfunctionsandvariables { font-weight: bold; }
+.python1-unbalancedbrace { color: #FFFF00; }
+-->
+</style>
+</head>
+<body>
+<!--StartFragment--><pre><code><span class="python1-reservedword">import</span><span class="python1-space"> </span><span class="python1-identifier">streamlit</span><span class="python1-space"> </span><span class="python1-reservedword">as</span><span class="python1-space"> </span><span class="python1-identifier">st
+</span><span class="python1-reservedword">import</span><span class="python1-space"> </span><span class="python1-identifier">pandas</span><span class="python1-space"> </span><span class="python1-reservedword">as</span><span class="python1-space"> </span><span class="python1-identifier">pd
+</span><span class="python1-reservedword">from</span><span class="python1-space"> </span><span class="python1-identifier">sklearn</span><span class="python1-symbol">.</span><span class="python1-identifier">model_selection</span><span class="python1-space"> </span><span class="python1-reservedword">import</span><span class="python1-space"> </span><span class="python1-identifier">train_test_split
+</span><span class="python1-reservedword">from</span><span class="python1-space"> </span><span class="python1-identifier">sklearn</span><span class="python1-symbol">.</span><span class="python1-identifier">naive_bayes</span><span class="python1-space"> </span><span class="python1-reservedword">import</span><span class="python1-space"> </span><span class="python1-identifier">GaussianNB</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">MultinomialNB</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">BernoulliNB
+</span><span class="python1-reservedword">from</span><span class="python1-space"> </span><span class="python1-identifier">sklearn</span><span class="python1-symbol">.</span><span class="python1-identifier">metrics</span><span class="python1-space"> </span><span class="python1-reservedword">import</span><span class="python1-space"> </span><span class="python1-identifier">accuracy_score</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">confusion_matrix
+</span><span class="python1-reservedword">import</span><span class="python1-space"> </span><span class="python1-identifier">seaborn</span><span class="python1-space"> </span><span class="python1-reservedword">as</span><span class="python1-space"> </span><span class="python1-identifier">sns
+</span><span class="python1-reservedword">import</span><span class="python1-space"> </span><span class="python1-identifier">matplotlib</span><span class="python1-symbol">.</span><span class="python1-identifier">pyplot</span><span class="python1-space"> </span><span class="python1-reservedword">as</span><span class="python1-space"> </span><span class="python1-identifier">plt
+</span><span class="python1-space"> 
+</span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">title</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Naive Bayes Classifier App&quot;</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+</span><span class="python1-comment"># Upload dataset
+</span><span class="python1-nonreservedkeyword">file</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">file_uploader</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Upload CSV Dataset&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-nonreservedkeyword">type</span><span class="python1-symbol">=[</span><span class="python1-string">&quot;csv&quot;</span><span class="python1-symbol">])
+</span><span class="python1-space"> 
+</span><span class="python1-reservedword">if</span><span class="python1-space"> </span><span class="python1-nonreservedkeyword">file</span><span class="python1-symbol">:
+</span><span class="python1-space">    </span><span class="python1-identifier">df</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">pd</span><span class="python1-symbol">.</span><span class="python1-identifier">read_csv</span><span class="python1-symbol">(</span><span class="python1-nonreservedkeyword">file</span><span class="python1-symbol">)
+</span><span class="python1-space">    </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">write</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Dataset Preview&quot;</span><span class="python1-symbol">)
+</span><span class="python1-space">    </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">dataframe</span><span class="python1-symbol">(</span><span class="python1-identifier">df</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+    </span><span class="python1-comment"># Select target column
+</span><span class="python1-space">    </span><span class="python1-identifier">target</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">selectbox</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Select Target Column&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">df</span><span class="python1-symbol">.</span><span class="python1-identifier">columns</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+    </span><span class="python1-identifier">X</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">df</span><span class="python1-symbol">.</span><span class="python1-identifier">drop</span><span class="python1-symbol">(</span><span class="python1-identifier">target</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">axis</span><span class="python1-symbol">=</span><span class="python1-number">1</span><span class="python1-symbol">)
+</span><span class="python1-space">    </span><span class="python1-identifier">y</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">df</span><span class="python1-symbol">[</span><span class="python1-identifier">target</span><span class="python1-symbol">]
+</span><span class="python1-space"> 
+    </span><span class="python1-comment"># Encode categorical data
+</span><span class="python1-space">    </span><span class="python1-identifier">X</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">pd</span><span class="python1-symbol">.</span><span class="python1-identifier">get_dummies</span><span class="python1-symbol">(</span><span class="python1-identifier">X</span><span class="python1-symbol">)
+</span><span class="python1-space">   
+    </span><span class="python1-comment"># Train test split
+</span><span class="python1-space">    </span><span class="python1-identifier">test_size</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">slider</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Test Size&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-float">0.1</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-float">0.5</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-float">0.2</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+    </span><span class="python1-comment"># Model selection
+</span><span class="python1-space">    </span><span class="python1-identifier">model_name</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">selectbox</span><span class="python1-symbol">(
+</span><span class="python1-space">        </span><span class="python1-string">&quot;Select Naive Bayes Model&quot;</span><span class="python1-symbol">,
+</span><span class="python1-space">        </span><span class="python1-symbol">[</span><span class="python1-string">&quot;Gaussian&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-string">&quot;Multinomial&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-string">&quot;Bernoulli&quot;</span><span class="python1-symbol">]
+</span><span class="python1-space">    </span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+    </span><span class="python1-reservedword">if</span><span class="python1-space"> </span><span class="python1-identifier">model_name</span><span class="python1-space"> </span><span class="python1-symbol">==</span><span class="python1-space"> </span><span class="python1-string">&quot;Gaussian&quot;</span><span class="python1-symbol">:
+</span><span class="python1-space">        </span><span class="python1-identifier">model</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">GaussianNB</span><span class="python1-symbol">()
+</span><span class="python1-space">    </span><span class="python1-reservedword">elif</span><span class="python1-space"> </span><span class="python1-identifier">model_name</span><span class="python1-space"> </span><span class="python1-symbol">==</span><span class="python1-space"> </span><span class="python1-string">&quot;Multinomial&quot;</span><span class="python1-symbol">:
+</span><span class="python1-space">        </span><span class="python1-identifier">model</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">MultinomialNB</span><span class="python1-symbol">()
+</span><span class="python1-space">    </span><span class="python1-reservedword">else</span><span class="python1-symbol">:
+</span><span class="python1-space">        </span><span class="python1-identifier">model</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">BernoulliNB</span><span class="python1-symbol">()
+</span><span class="python1-space"> 
+    </span><span class="python1-reservedword">if</span><span class="python1-space"> </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">button</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Train Model&quot;</span><span class="python1-symbol">):
+</span><span class="python1-space"> 
+        </span><span class="python1-identifier">X_train</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">X_test</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">y_train</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">y_test</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">train_test_split</span><span class="python1-symbol">(
+</span><span class="python1-space">            </span><span class="python1-identifier">X</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">y</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">test_size</span><span class="python1-symbol">=</span><span class="python1-identifier">test_size</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">random_state</span><span class="python1-symbol">=</span><span class="python1-number">42
+</span><span class="python1-space">        </span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+        </span><span class="python1-identifier">model</span><span class="python1-symbol">.</span><span class="python1-identifier">fit</span><span class="python1-symbol">(</span><span class="python1-identifier">X_train</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">y_train</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+        </span><span class="python1-identifier">train_pred</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">model</span><span class="python1-symbol">.</span><span class="python1-identifier">predict</span><span class="python1-symbol">(</span><span class="python1-identifier">X_train</span><span class="python1-symbol">)
+</span><span class="python1-space">        </span><span class="python1-identifier">test_pred</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">model</span><span class="python1-symbol">.</span><span class="python1-identifier">predict</span><span class="python1-symbol">(</span><span class="python1-identifier">X_test</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+        </span><span class="python1-identifier">train_acc</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">accuracy_score</span><span class="python1-symbol">(</span><span class="python1-identifier">y_train</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">train_pred</span><span class="python1-symbol">)
+</span><span class="python1-space">        </span><span class="python1-identifier">test_acc</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">accuracy_score</span><span class="python1-symbol">(</span><span class="python1-identifier">y_test</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">test_pred</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+        </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">subheader</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Results&quot;</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+        </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">write</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Training Accuracy:&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-nonreservedkeyword">round</span><span class="python1-symbol">(</span><span class="python1-identifier">train_acc</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-number">3</span><span class="python1-symbol">))
+</span><span class="python1-space">        </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">write</span><span class="python1-symbol">(</span><span class="python1-string">&quot;Testing Accuracy:&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-nonreservedkeyword">round</span><span class="python1-symbol">(</span><span class="python1-identifier">test_acc</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-number">3</span><span class="python1-symbol">))
+</span><span class="python1-space"> 
+        </span><span class="python1-comment"># Confusion matrix
+</span><span class="python1-space">        </span><span class="python1-identifier">cm</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">confusion_matrix</span><span class="python1-symbol">(</span><span class="python1-identifier">y_test</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">test_pred</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+        </span><span class="python1-identifier">fig</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">ax</span><span class="python1-space"> </span><span class="python1-symbol">=</span><span class="python1-space"> </span><span class="python1-identifier">plt</span><span class="python1-symbol">.</span><span class="python1-identifier">subplots</span><span class="python1-symbol">()
+</span><span class="python1-space">        </span><span class="python1-identifier">sns</span><span class="python1-symbol">.</span><span class="python1-identifier">heatmap</span><span class="python1-symbol">(</span><span class="python1-identifier">cm</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">annot</span><span class="python1-symbol">=</span><span class="python1-nonreservedkeyword">True</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">fmt</span><span class="python1-symbol">=</span><span class="python1-string">&quot;d&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">cmap</span><span class="python1-symbol">=</span><span class="python1-string">&quot;Blues&quot;</span><span class="python1-symbol">,</span><span class="python1-space"> </span><span class="python1-identifier">ax</span><span class="python1-symbol">=</span><span class="python1-identifier">ax</span><span class="python1-symbol">)
+</span><span class="python1-space">        </span><span class="python1-identifier">st</span><span class="python1-symbol">.</span><span class="python1-identifier">pyplot</span><span class="python1-symbol">(</span><span class="python1-identifier">fig</span><span class="python1-symbol">)
+</span><span class="python1-space"> 
+</span></code></pre><!--EndFragment--></body>
+</html>
